@@ -3,7 +3,9 @@
 set -e
 set -x
 
-echo "Running up.sh..."
+echo "Running openvpn_up.sh..."
+
+ETH0_IP=$(ip address show dev eth0 | grep inet | awk '{print $2}' | cut -d/ -f 1)
 
 # Setup port forwarding
 if [ -e "/etc/openvpn/port_forwarding.conf" ]; then
@@ -33,4 +35,4 @@ if [ -e "/etc/openvpn/port_forwarding.conf" ]; then
     done
 fi
 
-echo "up.sh done"
+echo "openvpn_up.sh done"
