@@ -30,7 +30,7 @@ if [ -e "/etc/openvpn/port_forwarding.conf" ]; then
         SRC_PORT=$(echo "$line" | awk '{print $3}')
         DEST_PORT=$(echo "$line" | awk '{print $4}')
         if [ -z "$DEST_PORT" ]; then
-            DEST_PORT=SRC_PORT
+            DEST_PORT=$SRC_PORT
         fi
         iptables \
             -t nat -A PREROUTING \
