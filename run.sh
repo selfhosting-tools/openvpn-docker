@@ -20,7 +20,8 @@ if [ -e "/etc/openvpn/port_forwarding.conf" ]; then
 
     # Masquerade source IP for packets coming from outside
     VPN_INTERFACE=$(cat /etc/openvpn/server.conf | grep '^dev' | awk '{print $2}')
-    iptables -t nat -A POSTROUTING -o $VPN_INTERFACE -j SNAT --to-source $ETH0_IP
+    VPN_INTERFACE_IP=$(ip address show dev $VPN_INTERFACE | grep inet | awk '{print $2}' | cut -d/ -f 1)
+    iptables -t nat -A POSTROUTING -o $VPN_INTERFACE -j SNAT --to-source $VPN_INTERFACE_IP
 
     cat "/etc/openvpn/port_forwarding.conf" | while read line
     do
